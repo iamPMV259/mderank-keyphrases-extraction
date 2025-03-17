@@ -7,9 +7,7 @@ MDERank Keyphrase Extraction is an unsupervised tool designed to extract key phr
 The algorithm is based on the methodology described in the paper:
 
 **"MDERank: A Novel Graph-based Keyphrase Extraction Approach"**  
-*Authors: [Author Names]*  
-*Publication Year: [Year]*  
-*Link: [[Insert URL if available](https://arxiv.org/abs/2110.06651)]*
+*Link: [https://arxiv.org/abs/2110.06651]*
 
 > **Note:** Replace the placeholders with the actual paper details once available.
 
