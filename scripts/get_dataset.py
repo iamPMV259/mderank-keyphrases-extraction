@@ -13,16 +13,7 @@ from nltk.corpus import stopwords
 from stanfordcorenlp import StanfordCoreNLP
 from tqdm import tqdm
 
-MAX_LEN = None
-enable_filter = None
-temp_en = None
-temp_de = None
 
-StanfordCoreNLP_path = '../../stanford-corenlp-full-2018-02-27'
-
-stopword_dict = set(stopwords.words('english'))
-en_model = StanfordCoreNLP(StanfordCoreNLP_path, quiet=True)
-tokenizer = None
 
 def get_long_data(file_path="data/nus/nus_test.json"):
     """ Load file.jsonl ."""
@@ -144,8 +135,21 @@ def get_short_data(file_path="data/krapivin/kravipin_test.json"):
                 raise ValueError
     return data,labels
 
+def get_krapivin_data(file_path="data/krapivin/krapivin_test.json"):
+    return get_short_data(file_path)
+
+def get_nus_data(file_path="data/nus/nus_test.json"):
+    return get_long_data(file_path)
+
+def get_semeval2010_data(file_path="data/SemEval2010/semeval_test.json"):
+    return get_short_data(file_path)
+
+
 if __name__ == "__main__":
-    data, labels = get_duc2001_data()
+    dataset = ['duc2001', 'inspec', 'krapivin', 'nus', 'semeval2010', 'sameval2017']
+
+    data, labels = get_long_data()
+        
 
     for id in data:
         print(id)

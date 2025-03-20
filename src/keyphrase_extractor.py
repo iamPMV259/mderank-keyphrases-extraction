@@ -6,6 +6,6 @@ def extract_keyphrases(text, top_k=10):
     Trả về danh sách top_k keyphrase có score thấp nhất (nghĩa là quan trọng nhất).
     """
     mde = MDERank()
-    ranked = mde.rank_keyphrases(text)
+    ranked = mde.rank_keyphrases(text.lower())
     top_candidates = [phrase for phrase, score in ranked[:top_k]]
     return top_candidates
