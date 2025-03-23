@@ -17,6 +17,20 @@ from nltk.corpus import stopwords
 from stanfordcorenlp import StanfordCoreNLP
 from tqdm import tqdm
 
+def clean_labels(labels):
+    clean_labels = {}
+    for id in labels:
+        label = labels[id]
+        clean_label = []
+        for kp in label:
+            if kp.find(";") != -1:
+                left, right = kp.split(";")
+                clean_label.append(left)
+                clean_label.append(right)
+            else:
+                clean_label.append(kp)
+        clean_labels[id] = clean_label        
+    return clean_labels
 
 
 def get_long_data(file_path="data/nus/nus_test.json"):
@@ -39,6 +53,7 @@ def get_long_data(file_path="data/nus/nus_test.json"):
                 labels[jsonl['name']] = keywords
             except:
                 raise ValueError
+    labels = clean_labels(labels)
     return data,labels
 
 
@@ -66,6 +81,7 @@ def get_duc2001_data(file_path="data/DUC2001"):
                 text = f.read().decode('utf8')
                 text = re.findall(pattern, text)[0]
                 data[fname] = text
+    labels = clean_labels(labels)
     return data,labels
 
 def get_inspec_data(file_path="data/Inspec"):
@@ -89,6 +105,7 @@ def get_inspec_data(file_path="data/Inspec"):
                 text=text.replace("\n",' ')
                 label=text.split("; ")
                 labels[left]=label
+    labels = clean_labels(labels)
     return data,labels
 
 def get_semeval2017_data(data_path="data/SemEval2017/docsutf8",labels_path="data/SemEval2017/keys"):
@@ -116,6 +133,7 @@ def get_semeval2017_data(data_path="data/SemEval2017/docsutf8",labels_path="data
             ls=text.splitlines()
             labels[left] = ls
             f.close()
+    labels = clean_labels(labels)
     return data,labels
 
 def get_short_data(file_path="data/krapivin/kravipin_test.json"):
@@ -138,6 +156,7 @@ def get_short_data(file_path="data/krapivin/kravipin_test.json"):
                 labels[i] = keywords
             except:
                 raise ValueError
+    labels = clean_labels(labels)
     return data,labels
 
 def get_krapivin_data(file_path="data/krapivin/krapivin_test.json"):
@@ -205,30 +224,23 @@ def print_to_json(data_name, k, score):
 
 
 if __name__ == "__main__":
-    dataset = ['duc2001', 'inspec', 'krapivin', 'nus', 'semeval2010', 'sameval2017']
-    # dataset = ['krapivin']
+    # dataset = ['duc2001', 'inspec', 'krapivin', 'nus', 'semeval2010', 'sameval2017']
+    dataset = ['duc2001']
+    
 
     for data_name in dataset:
         data,labels = get_dataset_data(data_name) 
-        # print(data_name)
-        # print(data)
-        # print(labels)
-        # for i in range(10):
-        #     print("========")     
-      
-        for k in [5, 10, 15]:
-            score = []
-            for id in data:
-                keyphrases = extract_keyphrases(data[id], top_k=k)
-                f1 = calculate_f1(keyphrases, labels[id], k)
-                score.append(f1)
-                # print(id, "({k})", " ==> ", f1)
-            print_to_json(data_name, k, score)
-        
-        # for id in data:
-        #     keyphrases = extract_keyphrases(data[id], top_k=5)
-        #     f1 = calculate_f1(keyphrases, labels[id], 5)
-        #     print(id, " ==> ", f1)
-        #     print(keyphrases)
-        #     print(labels[id])
-        #     print()
+        score5 = []
+        score10 = []
+        score15 = []
+        for id in data:
+            keyphrases = extract_keyphrases(data[id], top_k=15)
+            print(id)
+            print(data[id])
+            print(keyphrases)
+            score5.append(calculate_f1(keyphrases, labels[id], 5))
+            score10.append(calculate_f1(keyphrases, labels[id], 10))
+            score15.append(calculate_f1(keyphrases, labels[id], 15))
+        print_to_json(data_name, 5, score5)
+        print_to_json(data_name, 10, score10)
+        print_to_json(data_name, 15, score15)
