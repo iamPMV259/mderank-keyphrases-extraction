@@ -28,7 +28,7 @@ Follow the steps below to run the keyphrase extraction:
 2. **Execution**: Run the `scripts/run_demo.py` script to extract keyphrases from your specified document. Use the following command:
 
    ```bash
-   python scripts/run_demo.py --input_file data/sample.txt
+   python scripts/run_demo.py
 ### Processing Datasets
 
 To extract keyphrases from predefined datasets, follow these steps:
@@ -48,7 +48,7 @@ To utilize this project within a Kaggle environment:
 
 2. **Prepare the data**:  
    - Compress the `data` directory into a ZIP file.  
-   - Upload the ZIP file to your Kaggle environment.
+   - Upload the ZIP file to Kaggle input.
 
 3. **Run the Notebook**:  
    - Open the `mderank-test.ipynb` notebook on Kaggle.  

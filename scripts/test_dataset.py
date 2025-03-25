@@ -224,6 +224,7 @@ def print_to_json(data_name, k, score):
 
 
 if __name__ == "__main__":
+
     # dataset = ['duc2001', 'inspec', 'krapivin', 'nus', 'semeval2010', 'sameval2017']
     dataset = ['duc2001']
     
