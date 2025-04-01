@@ -1,11 +1,13 @@
-from .mderank import MDERank
+from .mderank import AsyncMDERank
+import asyncio
 
-def extract_keyphrases(text, top_k=10):
+async def extract_keyphrases(text, top_k=50):
     """
-    Hàm bọc để trích xuất keyphrase từ văn bản.
-    Trả về danh sách top_k keyphrase có score thấp nhất (nghĩa là quan trọng nhất).
+    Wrapper function to extract keyphrases from text.
+    Returns a list of the top_k keyphrases with the lowest scores (i.e., the most important ones).
     """
-    mde = MDERank()
-    ranked = mde.rank_keyphrases(text.lower())
+    mde = AsyncMDERank()
+    text = text.lower()
+    ranked = await mde.rank_keyphrases(text)
     top_candidates = [phrase for phrase, score in ranked[:top_k]]
     return top_candidates

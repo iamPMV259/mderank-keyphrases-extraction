@@ -44,13 +44,16 @@ To utilize this project within a Kaggle environment:
 
 1. **Upload Notebook**:  
    - Go to your Kaggle workspace.  
-   - Upload the `mderank-test.ipynb` notebook.
+   - Upload the `mderank-test-kaggle.ipynb` notebook.
 
 2. **Prepare the data**:  
    - Compress the `data` directory into a ZIP file.  
    - Upload the ZIP file to Kaggle input.
 
 3. **Run the Notebook**:  
-   - Open the `mderank-test.ipynb` notebook on Kaggle.  
+   - Open the `mderank-test-kaggle.ipynb` notebook on Kaggle.  
    - Ensure the data path is correctly set.  
    - Run the notebook cells sequentially to perform keyphrase extraction.
+
+## Results 
+F1 score of model after test with each dataset in `results` directory
