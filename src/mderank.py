@@ -6,7 +6,7 @@ import spacy
 import torch.nn.functional as F
 import asyncio
 from transformers import AutoTokenizer, AutoModel
-
+from typing import Any
 
 # Ensure NLTK resources are downloaded (if not, uncomment the lines below)
 nltk.download('averaged_perceptron_tagger')
@@ -23,10 +23,10 @@ class MDERank:
       4. Compute cosine similarity between the embedding of the original document and the masked document.
       5. Rank the candidates by score (lower scores indicate higher importance of the candidate).
     """
-    def __init__(self, model_name="avsolatorio/GIST-small-Embedding-v0", 
-                 device='cuda' if torch.cuda.is_available() else 'cpu',
-                 max_len=512):
-        self.device = device
+    def __init__(self, model_name:str="avsolatorio/GIST-small-Embedding-v0", 
+                 device:str='cuda' if torch.cuda.is_available() else 'cpu',
+                 max_len:int=512):
+        self.device:str = device
         self.max_len = max_len
 
         # Load tokenizer and model from transformers (using AutoModel)
@@ -50,7 +50,7 @@ class MDERank:
         Preprocess text: remove special characters, replace tabs, and remove extra whitespace.
         """
         text = re.sub(r'[<>[\]{}]', ' ', text)
-        text = text.replace("\t", " ")
+        text = text.replace("\n\t", " ")
         text = re.sub(r'\s{2,}', ' ', text)
         return text.strip()
 
@@ -210,12 +210,12 @@ class AsyncMDERank:
         """
         def _clean():
             text2 = re.sub(r'[<>[\]{}]', ' ', text)
-            text2 = text2.replace("\t", " ")
+            text2 = text2.replace("\n\t", " ")
             text2 = re.sub(r'\s{2,}', ' ', text2)
             return text2.strip()
         return await asyncio.to_thread(_clean)
 
-    async def extract_candidates(self, document):
+    async def extract_candidates(self, document:str):
         """
         Extract candidate keyphrases using spaCy:
           - Use spaCy to tokenize and POS-tag the text.
@@ -239,7 +239,7 @@ class AsyncMDERank:
         """
         Encode the document into input for the model with a fixed length (max_len).
         """
-        def _encode():
+        def _encode() -> dict[str, Any]:
             tokens = self.tokenizer.tokenize(text)
             if len(tokens) < self.max_len:
                 tokens = tokens + ['[PAD]'] * (self.max_len - len(tokens))

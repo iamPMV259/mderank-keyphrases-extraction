@@ -8,14 +8,8 @@ import re
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.keyphrase_extractor import extract_keyphrases
+from .call_gemini_api import extract_keyphrases as gemini_extract_keyphrases
 
-
-def clean_document(doc):
-    doc = re.sub(r'\. ', ' . ', doc)
-    doc = re.sub(r', ', ' , ', doc)
-    doc = doc.replace('\n', ' ')
-    doc = doc.replace('\t', ' ')
-    return doc
 
 
 
@@ -51,7 +45,6 @@ async def main():
 
 
         # doc = title + ". " + content
-        # doc = clean_document(doc)
         # mde_keywords = await extract_keyphrases(doc)
 
         # new_record = {
