@@ -33,9 +33,9 @@ async def main():
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
     keyphrases = await extract_keyphrases(text)
-    print("Extracted Keyphrases:")
-    for i, kp in enumerate(keyphrases, start=1):
-        print(f"{i}. {kp}")
+    # print("Extracted Keyphrases:")
+    # for i, kp in enumerate(keyphrases, start=1):
+    #     print(f"{i}. {kp}")
     keyphrases = [lemma(kw) for kw in keyphrases]
     print("Extracted Keyphrases:")
     for i, kp in enumerate(keyphrases, start=1):

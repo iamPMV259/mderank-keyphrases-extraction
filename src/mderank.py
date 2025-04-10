@@ -231,7 +231,6 @@ class AsyncMDERank:
                 candidate = " ".join(candidate_tokens).strip()
                 if candidate:  # Only add non-empty candidates
                     candidates.append(candidate)
-            print("Candidates:", candidates)
             return candidates
         return await asyncio.to_thread(_extract, doc_clean)
 
