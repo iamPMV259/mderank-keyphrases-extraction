@@ -1,0 +1,26 @@
+[project]
+name = "mde-rank"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.12",
+    "nltk>=3.9.1",
+    "pip>=25.0.1",
+    "sentence-transformers>=4.0.2",
+    "spacy>=3.8.5",
+    "uvicorn[standard]>=0.34.1",
+]
+
+
+[tool.basedpyright]
+pythonVersion = "3.10"
+pythonPlatform = "Linux"
+typeCheckingMode = "strict"
+reportUnusedVariable = "hint"
+reportUnusedImport = "hint"
+reportUnusedParameter = "hint"
+reportUnusedExpression = "hint"
+reportMissingTypeStubs = false
+autoImportCompletions = true
